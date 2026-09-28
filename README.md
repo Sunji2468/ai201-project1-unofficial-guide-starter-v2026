@@ -30,52 +30,59 @@
 ## Chunking Strategy
 
 **Chunk size:**
+Up to 400 characters, using paragraph boundaries
 **Overlap:**
+0 characters
 
-<!-- What about YOUR documents made you pick these numbers? Short posts and
-     long sectioned guides don't want the same chunking, and "800 seemed
-     reasonable" earns nothing. Point at something you noticed when you read
-     the documents in Milestone 1.
-
-     If you changed your mind partway through, say so and say why. That's worth
-     more than pretending you got it right first time.
-
-     Milestone 3. -->
+The campus_life corpus has short posts, and its paragraphs range from 10 to 373
+characters. I kept each document title with its first paragraph, then used each
+remaining paragraph as its own chunk. The resulting title-plus-first-paragraph
+chunks are at most 397 characters, so a 400-character ceiling fits the corpus
+without cutting a sentence. I used no overlap because each paragraph is already
+a complete, small thought and overlapping them would duplicate most of the
+document.
 
 ## Sample Chunks
 
-<!-- Five chunks, pasted as text. Label each one and name the file it came from
-     AND the function that produced it — the grader checks your code against
-     what you claim here.
-
-     `python app.py chunks -n 5` prints all three for you. Copy them straight
-     across.
-
-     Milestone 3. -->
-
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `admin_add_drop_deadline.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+On the add/drop deadline
+
+You can add a course through the end of the second week. Dropping is a longer
+window — through the end of week six — but a drop after week two shows as a W on
+your transcript. Nothing anywhere on the registrar's site says this plainly,
+and students find out from each other.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `course_cs_340_exams.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+Start the term project in week three, not week eight; everyone learns this the
+hard way.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `course_phys_130_workload.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+Workload for PHYS 130 Mechanics
+
+People keep asking so: 7 hours a week, plus 3 on lab weeks. That's real time,
+not optimistic time.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `dining_verrill_street_grill_followup.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+Also worth saying: one register, so the queue is a single line no matter how
+busy. Nobody tells you this at orientation.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `housing_morrow_house.txt#1` — produced by: `chunker.py::split_documents`
 
 ```
+The good: cheapest housing tier by about $900 a year, and the singles are real
+singles.
 ```
 
 ## Sample Answer
