@@ -23,8 +23,7 @@ For at least 4 of my 5 test questions, the retrieved chunks include one that
 contains the answer.
 
 **Why this target:**
-<!-- e.g. "One of my questions is about a topic only two documents mention, so
-     I expect that one to be hard." -->
+My five questions cover different administrative and course documents, so I expect most answers to be retrievable. I chose 4 of 5 because one topic may be represented less clearly than the others.
 
 ---
 
@@ -33,8 +32,7 @@ contains the answer.
 Every answer the system produces names at least one source document.
 
 **Why this target:**
-<!-- Why all five and not four? What about your setup makes that achievable —
-     or what would have to go wrong for it not to be? -->
+Source names are important because a user needs to verify the advice against the original document. I chose every answer rather than four of five because the system has source metadata available for each retrieved chunk.
 
 ---
 
@@ -50,47 +48,25 @@ in at least 4 of 5 tries.
      just keep five of them, or the "4 of 5" above has nothing to be 4 of. -->
 
 **Why this target:**
-<!-- What did your distances look like when you set the cutoff in Milestone 4?
-     Was there a clean gap, or did the two groups overlap? -->
+The corpus only covers campus life and university procedures, so unrelated questions should be distinguishable from in-scope questions. I chose 4 of 5 because one unrelated question could have wording that happens to resemble a campus document.
 
 ---
 
 ## 4. Something about your chunks
-
-<!-- YOU WRITE THIS ONE.
-
-     How would you know if your chunks were the right size? Name something
-     countable or observable.
-
-     Examples of the right shape — don't copy these, they should come from
-     what you actually saw in Milestone 3:
-       - "At least 4 of 5 sampled chunks read as a complete thought, with no
-          sentence cut in half at either end."
-       - "No chunk is shorter than 200 characters, since anything below that
-          in my corpus turned out to be a heading with no content under it." -->
-
-
+At least 4 of 5 sampled chunks contain at least one complete answer-bearing sentence and do not cut off in the middle of a sentence.
 
 **Why this target:**
-
+The campus-life documents are mostly short posts, so a good chunk should usually preserve a complete answer-bearing sentence. I chose 4 of 5 because a chunk near a document boundary may occasionally be less complete.
 
 
 ---
 
 ## 5. Your choice
-
-<!-- YOU WRITE THIS ONE TOO.
-
-     Pick something you actually care about getting right. It could be about
-     speed, about refusals, about a particular kind of question your corpus
-     handles badly, about source attribution being correct rather than merely
-     present — anything, as long as it names a number or an observable
-     outcome. -->
-
+At least 4 of my 5 test answers contain the expected word or phrase listed for that question in questions.py
 
 
 **Why this target:**
-
+The expected phrases identify concrete facts from my corpus, so this is easier to check than judging whether an answer merely sounds reasonable. I chose 4 of 5 because one question may be harder for retrieval or generation to answer correctly.
 
 
 ---
