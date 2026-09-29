@@ -87,30 +87,37 @@ singles.
 
 ## Sample Answer
 
-<!-- One complete question and answer, pasted as text, with the source line
-     visible. Milestone 4. -->
+**Question:** How is the housing lottery order decided for juniors and seniors?
 
-**Question:**
-
-**Answer:**
+**Answer:** For juniors and seniors, the housing lottery order is decided by accumulated credit hours first, with random tie-breaks used only in the event of a tie (`admin_housing_lottery.txt`).
 
 ```
+Sources retrieved: admin_housing_lottery.txt, admin_parking_permits.txt,
+advising_registration.txt, housing_aldridge_hall.txt, housing_morrow_house.txt
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.6
 
-<!-- The number you set in config.py, and how you got there.
-
-     You ran five questions your corpus covers and the five in OUT_OF_SCOPE
-     that it clearly doesn't, and wrote down the best distance for each. What
-     did those two groups look like? Where was the gap? Put the actual numbers
-     here — the table below wants all ten rows.
-
-     Milestone 4. -->
+The five in-scope questions had best distances from 0.1839 to 0.3719. The five
+out-of-scope questions had best distances from 0.7873 to 0.9228. I kept the
+starter cutoff of 0.6 because it falls in the gap between the two groups: all
+five in-scope questions pass and all five out-of-scope questions are refused.
+I kept `top-k=5` because the relevant chunk was first for all five questions,
+while returning several nearby chunks lets the answer include context when a
+question needs it.
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+| How is the housing lottery order decided for juniors and seniors? | Yes | 0.2138 |
+| How long do I have to change my meal plan tier, and what happens when I downgrade? | Yes | 0.1839 |
+| How much printing credit does each student receive per semester? | Yes | 0.3719 |
+| How long does my student account stay active after graduation? | Yes | 0.3540 |
+| How many hours per week should I expect to spend outside class for CS 210? | Yes | 0.2281 |
+| What is the capital of Mongolia? | No | 0.7873 |
+| How do I change the oil in a diesel engine? | No | 0.9228 |
+| Who won the 1994 World Cup? | No | 0.8474 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8243 |
+| How do I write a for loop in Rust? | No | 0.8768 |
 
 ## How I Used AI
 
