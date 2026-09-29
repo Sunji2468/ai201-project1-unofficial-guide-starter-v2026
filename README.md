@@ -21,11 +21,12 @@
 
 ## What This Does
 
-<!-- Three or four sentences. Which corpus you picked, and the kinds of
-     questions your system answers. Write it for someone who has never seen
-     this repo.
-
-     Milestone 5. -->
+This system answers questions about the `campus_life` corpus, which contains
+short posts about university procedures, housing, dining, printing, accounts,
+and courses. It retrieves relevant document chunks and uses them to generate a
+brief answer that names the source file. A relevance gate refuses questions
+whose best retrieved chunk is not close enough, so questions outside campus
+life are answered with an honest lack-of-information message.
 
 ## Chunking Strategy
 
@@ -121,18 +122,18 @@ question needs it.
 
 ## How I Used AI
 
-<!-- Two specific moments. For each: what you asked for, what came back, and
-     what you changed about it.
+**1.** I asked an AI tool to pressure-test my acceptance criteria by explaining
+how each one could be checked from its wording alone. It pointed out that
+"useful thought" was subjective, so I changed the chunk criterion to require a
+complete answer-bearing sentence and a measurable result for at least 4 of 5
+sampled chunks.
 
-     "I asked Claude to write the chunking function from my notes. It ignored
-     the overlap, so I added that myself" is the level of detail we're after.
-     "I used AI to help me code" is not.
-
-     Milestone 5. -->
-
-**1.**
-
-**2.**
+**2.** I asked an AI tool to help me choose a chunking strategy after I read the
+short `campus_life` documents and measured their paragraph lengths. It suggested
+paragraph-aware chunks, but I chose the final details myself: attach each title
+to its first paragraph, use no overlap, and keep the observed maximum under a
+400-character target. I implemented and checked the function against the
+generated chunks before documenting five samples.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
