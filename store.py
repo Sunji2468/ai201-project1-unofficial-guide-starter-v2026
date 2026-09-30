@@ -18,6 +18,7 @@ rest of the project if they were wrong:
 """
 
 import os
+import re
 import shutil
 from dataclasses import dataclass
 
@@ -45,6 +46,8 @@ class Result:
 
 
 _model = None
+_keyword_indexes = {}
+_keyword_documents = {}
 
 # The model Chroma bundles. Anything else in config.EMBEDDING_MODEL means
 # "fetch that one from Hugging Face instead" — see `_embedder`.
@@ -199,16 +202,17 @@ def search(
             f"No index called '{name}'. Run `python app.py index` first."
         ) from exc
 
+    count = collection.count()
     raw = collection.query(
         query_embeddings=embed([question]),
-        n_results=min(top_k, collection.count()),
+        n_results=count,
     )
 
-    results: list[Result] = []
+    semantic_results: list[Result] = []
     for text, meta, distance in zip(
         raw["documents"][0], raw["metadatas"][0], raw["distances"][0]
     ):
-        results.append(
+        semantic_results.append(
             Result(
                 text=text,
                 source=str(meta.get("source", "unknown")),
@@ -217,7 +221,52 @@ def search(
                 produced_by=str(meta.get("produced_by", "unknown")),
             )
         )
-    return results
+
+    # Rerank the same candidates with exact-token matches as well as meaning.
+    # Keeping the original semantic distance preserves the gate's calibration.
+    name = config.collection_name(corpus, variant)
+    if name not in _keyword_indexes:
+        stored = collection.get(include=["documents", "metadatas"])
+        documents = stored["documents"]
+        from rank_bm25 import BM25Okapi
+
+        tokenized = [_tokens(document) for document in documents]
+        _keyword_indexes[name] = BM25Okapi(tokenized)
+        _keyword_documents[name] = [
+            f"{meta.get('source', 'unknown')}#{meta.get('index', 0)}"
+            for meta in stored["metadatas"]
+        ]
+
+    all_keyword_scores = _keyword_indexes[name].get_scores(_tokens(question))
+    keyword_by_label = dict(zip(_keyword_documents[name], all_keyword_scores))
+    keyword_scores = [
+        keyword_by_label.get(result.label, 0.0) for result in semantic_results
+    ]
+    semantic_scores = [max(0.0, 1.0 - result.distance / 2.0) for result in semantic_results]
+
+    def normalize(scores):
+        maximum = max(scores, default=0.0)
+        if maximum <= 0.0:
+            return [0.0] * len(scores)
+        return [score / maximum for score in scores]
+
+    hybrid_scores = [
+        0.7 * semantic_score + 0.3 * keyword_score
+        for semantic_score, keyword_score in zip(
+            normalize(semantic_scores), normalize(keyword_scores)
+        )
+    ]
+    ranked = sorted(
+        zip(hybrid_scores, semantic_results),
+        key=lambda item: item[0],
+        reverse=True,
+    )
+    return [result for _, result in ranked[:top_k]]
+
+
+def _tokens(text: str) -> list[str]:
+    """Tokenize text consistently for the local keyword index."""
+    return re.findall(r"[a-z0-9$]+", text.lower())
 
 
 def index_exists(corpus: str | None = None, variant: str = "default") -> bool:

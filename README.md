@@ -253,9 +253,19 @@ testing retrieval precision more strictly.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I added BM25 keyword reranking in `store.py::search`,
+combining normalized keyword scores with the existing semantic scores. The
+semantic distance is still preserved for the relevance gate.
 
-**Why I picked it:**
+**Why I picked it:** The diagnosis identified rank-1 retrieval precision as
+the stricter weakness to test. Exact terms such as `$30`, `six months`, and
+`CS 210` are useful signals that semantic search can underweight, so hybrid
+search directly tests that weakness without changing chunking or generation.
+
+The after-run evidence is in
+`results/run_2026-09-30_1809_after.md`, produced by
+`run_eval.py::main`. A focused rank-1 check placed an answer-bearing chunk
+first for all five questions (5/5).
 
 <!-- Connect it to a specific diagnosis above in one sentence. If you can't,
      you picked a fix because it sounded impressive. -->
@@ -267,13 +277,19 @@ testing retrieval precision more strictly.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Answer-bearing chunks are complete | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Answers contain the expected phrase | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
 
 **Did it help?**
+
+Yes, for the stricter rank-1 retrieval check: the hybrid search put the
+answer-bearing chunk first for all five questions. The original five
+criterion totals did not increase because the semantic system had already
+scored 5/5; the after run confirms that hybrid search preserved all five
+criteria and still refused 5/5 out-of-scope questions.
 
 <!-- Say plainly whether it did, and how you know. If it made things worse,
      say that — a change that backfired, honestly reported, earns full credit
