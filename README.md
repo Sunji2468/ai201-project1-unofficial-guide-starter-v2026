@@ -135,6 +135,12 @@ to its first paragraph, use no overlap, and keep the observed maximum under a
 400-character target. I implemented and checked the function against the
 generated chunks before documenting five samples.
 
+**3.** In unit 2, I used an AI tool to inspect the retrieval path and compare
+the before and after evidence. It suggested hybrid BM25 plus semantic ranking
+because my stricter diagnosis focused on exact terms and rank-1 precision. I
+kept the implementation decision myself, caught and fixed an initial score-
+alignment bug with a focused retrieval check, and then ran the full evaluation.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -308,9 +314,25 @@ criteria and still refused 5/5 out-of-scope questions.
 
      Milestone 5. -->
 
+No original criterion was missed after the hybrid-search change, so there is
+no criterion-specific fix left to make. The remaining limitation is confidence:
+the evaluation has only five hand-written in-scope questions and five
+out-of-scope questions, all from a small corpus. I stopped after one targeted
+improvement because the assignment calls for measuring one change, and the
+after run preserved 5/5 on every criterion. A larger evaluation set with
+paraphrases, ambiguous wording, and distractor documents would be the next
+check before calling the system robust.
+
 ## What I'd Do Differently
 
 <!-- Knowing what you know now — which of your five criteria would you write
      differently, and why?
 
      Milestone 5. -->
+
+I would write criterion 1 more strictly in the next unit: the answer-bearing
+chunk must be rank 1 for all 5 of 5 questions across all three runs, rather
+than allowing the answer anywhere in the top five and accepting 4 of 5. That
+would measure retrieval precision directly and make a perfect result more
+meaningful. I would also prepare a few paraphrased questions before evaluating
+so the test does not mostly reward matching the wording of the corpus.
