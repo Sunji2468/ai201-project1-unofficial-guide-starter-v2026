@@ -162,11 +162,36 @@ generated chunks before documenting five samples.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunk contains the answer | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Answer-bearing chunks are complete | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 5. Answers contain the expected phrase | 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+
+The raw run output is in `results/run_2026-09-30_1721_before.md`, produced by
+`run_eval.py::main`. The generated answers from run 1 were:
+
+```
+For juniors and seniors, the housing lottery order is decided by accumulated credit hours first, with random tie-breaking used if there is a tie.
+Source: admin_housing_lottery.txt
+
+You can change your meal plan tier once in the first ten days of the semester before it is locked. When you downgrade, the difference is refunded to your student account.
+Source: admin_meal_plan_changes.txt
+
+Each student receives $30 of printing credit per semester.
+Source: admin_printing_quota.txt
+
+Your student account stays active for six months after you graduate (admin_wifi_and_accounts.txt).
+
+You should expect to spend 8 to 10 hours a week outside class for CS 210.
+Source: course_cs_210.txt and course_cs_210_workload.txt
+```
+
+The same file records the retrieved source lists for criterion 1, the source
+names in every answer for criterion 2, and the deterministic gate output from
+`run_eval.py::check_out_of_scope`: `gate refused 5 of 5`. Criteria 4 and 5
+were checked against the retrieved chunks and the `expects` phrases in
+`questions.py`; all five questions passed in each run.
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
