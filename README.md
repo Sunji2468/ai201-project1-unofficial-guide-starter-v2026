@@ -210,11 +210,11 @@ were checked against the retrieved chunks and the `expects` phrases in
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunks contain the answer for at least 4 of 5 questions | MET | Each of the three runs retrieved an answer-bearing source for all five questions, so the result was 5/5 every time. |
+| 2 | Every answer names a source | MET | All 15 generated answers named at least one source document, meeting the 5/5 target in every run. |
+| 3 | The relevance gate stops out-of-corpus questions in at least 4 of 5 cases | MET | The deterministic gate refused all five out-of-corpus questions, giving 5/5 against the target of 4/5. |
+| 4 | At least 4 of 5 sampled chunks contain a complete answer-bearing sentence | MET | The five answer-bearing retrieved chunks were complete sentences or complete short passages in all three runs, giving 5/5. |
+| 5 | At least 4 of 5 answers contain the expected phrase | MET | Each run contained all five expected phrases from `questions.py`, so every run scored 5/5. |
 
 ## Diagnoses
 
