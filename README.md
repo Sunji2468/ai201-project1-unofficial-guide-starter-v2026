@@ -236,6 +236,21 @@ were checked against the retrieved chunks and the `expects` phrases in
 
      Milestone 3. -->
 
+No criteria were missed, so there is no observed failure to assign to a
+pipeline stage. The closest useful diagnosis is that the targets were
+conservative: all five questions passed all five checks, while three original
+targets allowed 4/5 and criterion 1 counted any answer-bearing chunk in the
+top five. The evaluation therefore did not expose a loading, chunking,
+embedding, retrieval, or generation failure.
+
+The pattern is a strong but small result rather than evidence that every stage
+is robust. The corpus questions are specific and the relevant documents are
+short, so this test set may be easier than a larger or noisier set would be.
+The criterion I would tighten is criterion 1: require the top-ranked result
+(rank 1, not merely any of the top five) to contain the answer for all 5 of 5
+questions across all three runs. That keeps the measurement objective while
+testing retrieval precision more strictly.
+
 ## The Improvement
 
 **What I changed:**
