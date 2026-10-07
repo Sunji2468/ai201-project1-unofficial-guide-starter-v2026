@@ -1,0 +1,86 @@
+Produced by: tools/audit_unit2.py::main
+Saved generation output: run_eval.py::run_once -> generate.py::answer_from_chunks
+
+Saved before report: run_2026-09-30_1721_before.md
+Run 1: C2 source named 5/5; C5 expected phrase 5/5
+Run 2: C2 source named 5/5; C5 expected phrase 5/5
+Run 3: C2 source named 5/5; C5 expected phrase 5/5
+C3: saved deterministic gate refused 5/5 (same value in each run column)
+
+Saved after report: run_2026-09-30_1809_after.md
+Run 1: C2 source named 5/5; C5 expected phrase 5/5
+Run 2: C2 source named 5/5; C5 expected phrase 5/5
+Run 3: C2 source named 5/5; C5 expected phrase 5/5
+C3: saved deterministic gate refused 5/5 (same value in each run column)
+
+Fresh retrieval audit: current campus_life/default index, real MiniLM on CPU
+Semantic baseline reproduces the pre-change collection.query(top_k=5) path.
+Hybrid path: store.py::search. Chunk producer recorded beside each chunk.
+
+Question: How is the housing lottery order decided for juniors and seniors?
+semantic: top-five contains expected phrase=True; rank-one=True
+rank-one admin_housing_lottery.txt#0, produced by chunker.py::split_documents:
+On the housing lottery
+
+The housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.
+hybrid: top-five contains expected phrase=True; rank-one=True
+rank-one admin_housing_lottery.txt#0, produced by chunker.py::split_documents:
+On the housing lottery
+
+The housing lottery is not random in the way most people assume. Rising sophomores get a number drawn at random, but juniors and seniors are ordered by accumulated credit hours first, and only tie-break randomly. That means a senior who took summer courses reliably beats a senior who didn't. Numbers come out the second week of March and selection runs over four evenings.
+
+Question: How long do I have to change my meal plan tier, and what happens when I downgrade?
+semantic: top-five contains expected phrase=True; rank-one=True
+rank-one admin_meal_plan_changes.txt#0, produced by chunker.py::split_documents:
+On the meal plan changes
+
+You can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.
+hybrid: top-five contains expected phrase=True; rank-one=True
+rank-one admin_meal_plan_changes.txt#0, produced by chunker.py::split_documents:
+On the meal plan changes
+
+You can change your meal plan tier once, in the first ten days of the semester. After that it's locked. Downgrading refunds the difference to your student account; upgrading bills you immediately.
+
+Question: How much printing credit does each student receive per semester?
+semantic: top-five contains expected phrase=True; rank-one=True
+rank-one admin_printing_quota.txt#0, produced by chunker.py::split_documents:
+On the printing quota
+
+Every student gets $30 of printing per semester, which is roughly 600 black-and-white pages. It does not roll over. Colour costs eight times as much per page, which people discover after printing one poster.
+hybrid: top-five contains expected phrase=True; rank-one=True
+rank-one admin_printing_quota.txt#0, produced by chunker.py::split_documents:
+On the printing quota
+
+Every student gets $30 of printing per semester, which is roughly 600 black-and-white pages. It does not roll over. Colour costs eight times as much per page, which people discover after printing one poster.
+
+Question: How long does my student account stay active after graduation?
+semantic: top-five contains expected phrase=True; rank-one=True
+rank-one admin_wifi_and_accounts.txt#0, produced by chunker.py::split_documents:
+On the wifi and accounts
+
+Your student account gives you campus wifi, printing, and a cloud drive with unlimited storage that most people never discover. The account stays active for six months after you graduate, and the cloud drive is purged at that point without a second warning.
+hybrid: top-five contains expected phrase=True; rank-one=True
+rank-one admin_wifi_and_accounts.txt#0, produced by chunker.py::split_documents:
+On the wifi and accounts
+
+Your student account gives you campus wifi, printing, and a cloud drive with unlimited storage that most people never discover. The account stays active for six months after you graduate, and the cloud drive is purged at that point without a second warning.
+
+Question: How many hours per week should I expect to spend outside class for CS 210?
+semantic: top-five contains expected phrase=True; rank-one=True
+rank-one course_cs_210.txt#1, produced by chunker.py::split_documents:
+Expect 8 to 10 hours a week outside class.
+hybrid: top-five contains expected phrase=True; rank-one=True
+rank-one course_cs_210_workload.txt#0, produced by chunker.py::split_documents:
+Workload for CS 210 Data Structures
+
+People keep asking so: 8 to 10 hours a week outside class. That's real time, not optimistic time.
+
+Fresh retrieval totals (phrase presence is a proxy; inspect printed chunks):
+semantic: top-five 5/5; rank-one 5/5
+hybrid: top-five 5/5; rank-one 5/5
+gate.py::check: What is the capital of Mongolia? | distance=0.826 | refused=True
+gate.py::check: How do I change the oil in a diesel engine? | distance=0.934 | refused=True
+gate.py::check: Who won the 1994 World Cup? | distance=0.847 | refused=True
+gate.py::check: What is the recommended dosage of ibuprofen for a headache? | distance=0.846 | refused=True
+gate.py::check: How do I write a for loop in Rust? | distance=0.877 | refused=True
+Fresh hybrid gate refused 5/5
